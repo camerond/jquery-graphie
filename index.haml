@@ -21,6 +21,15 @@
             weight: 'normal'
           }
         });
+        $('#teeny').graphie({
+          padding_top: 0,
+          line: {
+            bgcolor: "#c6e0eb"
+          },
+          labels: {
+            size: 10
+          }
+        });
       });
     %style(type='text/css')
       :sass
@@ -29,39 +38,32 @@
           padding: 50px
         .graphie
           width: 400px
-          height: 100px
+          height: 140px
           background: #ddffff
         #options.graphie
-          height: 60px
-          width: 500px
+          height: 100px
+          width: 600px
           background: #882907
+        #teeny.graphie
+          height: 20px
+          width: 300px
+          background: #fff
   %html
     %h1 Graphie
     %h2 A cute little graphing library
     %h3 it has defaults:
     %dl#normal
-      - 2.times do
-        %dt January 2006
-        %dd 182
-        %dt February 2006
-        %dd 65
-        %dt March 2006
-        %dd 142
-        %dt April 2006
-        %dd 35
-        %dt May 2006
-        %dd 143
+      - 10.times do
+        %dt Label
+        %dd=rand(300)
     %h3 it has options:
     %dl#options
-      - 2.times do
-        %dt January 2006
-        %dd 182
-        %dt February 2006
-        %dd 65
-        %dt March 2006
-        %dd 142
-        %dt April 2006
-        %dd 35
-        %dt May 2006
-        %dd 143
+      - 10.times do
+        %dt Label
+        %dd=rand(30)
+    %h3 it looks good teeny:
+    %dl#teeny
+      - 50.times do
+        %dt Label
+        %dd=rand(30)
     %h3 it only draws one line at a time.

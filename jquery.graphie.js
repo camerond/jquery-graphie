@@ -4,7 +4,6 @@
 
   $.fn.graphie = function(options) {
     var defaults = {
-      padding_top: 10,
       line: {
         bgcolor: '#5ad0ea',
         smoothing: 0,
@@ -84,7 +83,7 @@
   }
 
   function getYScale(points) {
-    return (opts.h - opts.padding_top) / Math.max.apply(Math, points);
+    return opts.h / Math.max.apply(Math, points);
   }
 
 })(jQuery);
