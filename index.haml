@@ -1,0 +1,67 @@
+%html
+  %head
+    %title Graphie
+    %script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js")
+    %script(type="text/javascript" src="lib/raphael.js")
+    %script(type="text/javascript" src="jquery.graphie.js")
+    :javascript
+      $(function() {
+        $('#normal').graphie();
+        $('#options').graphie({
+          line: {
+            bgcolor: "#d24413",
+            smoothing: 5,
+            autosmooth: false
+          },
+          labels: {
+            color: '#fff',
+            x: 20,
+            y: 20,
+            size: 20,
+            weight: 'normal'
+          }
+        });
+      });
+    %style(type='text/css')
+      :sass
+        body
+          font-family: helvetica, arial, sans-serif
+          padding: 50px
+        .graphie
+          width: 400px
+          height: 100px
+          background: #ddffff
+        #options.graphie
+          height: 60px
+          width: 500px
+          background: #882907
+  %html
+    %h1 Graphie
+    %h2 A cute little graphing library
+    %h3 it has defaults:
+    %dl#normal
+      - 2.times do
+        %dt January 2006
+        %dd 182
+        %dt February 2006
+        %dd 65
+        %dt March 2006
+        %dd 142
+        %dt April 2006
+        %dd 35
+        %dt May 2006
+        %dd 143
+    %h3 it has options:
+    %dl#options
+      - 2.times do
+        %dt January 2006
+        %dd 182
+        %dt February 2006
+        %dd 65
+        %dt March 2006
+        %dd 142
+        %dt April 2006
+        %dd 35
+        %dt May 2006
+        %dd 143
+    %h3 it only draws one line at a time.
