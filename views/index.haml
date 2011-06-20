@@ -1,9 +1,10 @@
 %html
   %head
     %title Graphie
+    %link(rel="stylesheet" href="/stylesheets/application.css")
     %script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js")
-    %script(type="text/javascript" src="lib/raphael.js")
-    %script(type="text/javascript" src="jquery.graphie.js")
+    %script(type="text/javascript" src="/javascript/lib/raphael.js")
+    %script(type="text/javascript" src="/javascript/jquery.graphie.js")
     :javascript
       $(function() {
         $('#normal').graphie();
@@ -31,24 +32,7 @@
           }
         });
       });
-    %style(type='text/css')
-      :sass
-        body
-          font-family: helvetica, arial, sans-serif
-          padding: 50px
-        .graphie
-          width: 400px
-          height: 140px
-          background: #ddffff
-          overflow: hidden
-        #options.graphie
-          height: 100px
-          width: 600px
-          background: #882907
-        #teeny.graphie
-          height: 20px
-          width: 300px
-          background: #fff
+
   %html
     %h1 Graphie
     %h2 A cute little graphing library
