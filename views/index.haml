@@ -11,12 +11,12 @@
         $('#normal').graphie();
         $('#options').graphie({
           line: {
-            bgcolor: "#d24413",
+            bgcolor: "#31363b",
             smoothing: 5,
             autosmooth: false
           },
           labels: {
-            color: '#fff',
+            color: '#ffd800',
             x: 20,
             y: 20,
             size: 20,
@@ -25,9 +25,6 @@
         });
         $('#teeny').graphie({
           padding_top: 0,
-          line: {
-            bgcolor: "#c6e0eb"
-          },
           labels: {
             size: 10
           }
@@ -61,4 +58,3 @@
         - 50.times do
           %dt Label
           %dd=rand(30)
-      %h3 it only draws one line at a time.
