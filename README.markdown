@@ -2,10 +2,5 @@
 
 a cute little graphing library with an adorably minimal amount of functionality.
 
-to demo it up:
+visit [http://jquery-graphie.heroku.com]() for examples.
 
-`gem install haml-server`
-
-`haml-server`
-
-navigate to `localhost:4567`

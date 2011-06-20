@@ -5,6 +5,7 @@
     %script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js")
     %script(type="text/javascript" src="/javascript/lib/raphael.js")
     %script(type="text/javascript" src="/javascript/jquery.graphie.js")
+    %script(type="text/javascript" src="http://use.typekit.com/aqp8xdq.js")
     :javascript
       $(function() {
         $('#normal').graphie();
@@ -32,23 +33,32 @@
           }
         });
       });
-
-  %html
-    %h1 Graphie
-    %h2 A cute little graphing library
-    %h3 it has defaults:
-    %dl#normal
-      - 10.times do
-        %dt Label
-        %dd=rand(300)
-    %h3 it has options:
-    %dl#options
-      - 10.times do
-        %dt Label
-        %dd=rand(30)
-    %h3 it looks good teeny:
-    %dl#teeny
-      - 50.times do
-        %dt Label
-        %dd=rand(30)
-    %h3 it only draws one line at a time.
+      try{Typekit.load();}catch(e){}
+  %body
+    #wrapper
+      %hgroup
+        %h1 jQuery.graphie
+        %h2 a cute little graphing library
+      %p
+        ©
+        = Time.now.year
+        %a(href="http://camerondaigle.com") Cameron Daigle
+      %p
+        Visualize the values in a definition list. For available options, check out the
+        %a(href="https://github.com/camerond/jquery-graphie/blob/master/jquery.graphie.js") source
+      %h3 it has defaults:
+      %dl#normal
+        - 10.times do
+          %dt Label
+          %dd=rand(300)
+      %h3 it has options:
+      %dl#options
+        - 10.times do
+          %dt Label
+          %dd=rand(30)
+      %h3 it looks good teeny:
+      %dl#teeny
+        - 50.times do
+          %dt Label
+          %dd=rand(30)
+      %h3 it only draws one line at a time.
