@@ -24,7 +24,7 @@
         To use, include [the plugin](https://github.com/camerond/jquery-graphie/blob/master/public/javascript/jquery.graphie.js) and call `$.graphie()` on a `<dl>` of numeric values. (Also requires [Raphael](http://raphaeljs.com/))
 
         For available options, check out the
-        [source](https://github.com/camerond/jquery-graphie/blob/master/jquery.graphie.js).
+        [source](https://github.com/camerond/jquery-graphie/blob/master/public/javascript/jquery.graphie.js).
 
       %h3 it has nice-looking defaults:
       %dl#normal
@@ -41,3 +41,16 @@
         - 20.times do
           %dt Label
           %dd=rand(30)
+
+
+    - if production?
+      :javascript
+        var _gaq = _gaq || [];
+         _gaq.push(['_setAccount', 'UA-308731-14']);
+         _gaq.push(['_trackPageview']);
+
+         (function() {
+           var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+           ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+         })();
