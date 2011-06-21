@@ -6,56 +6,38 @@
     %script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js")
     %script(type="text/javascript" src="/javascript/lib/raphael.js")
     %script(type="text/javascript" src="/javascript/jquery.graphie.js")
+    %script(type="text/javascript" src="/javascript/demo.js")
     %script(type="text/javascript" src="http://use.typekit.com/aqp8xdq.js")
     :javascript
-      $(function() {
-        $('#normal').graphie();
-        $('#options').graphie({
-          line: {
-            bgcolor: "#31363b",
-            smoothing: 5,
-            autosmooth: false
-          },
-          labels: {
-            color: '#ffd800',
-            x: 20,
-            y: 20,
-            size: 20,
-            weight: 'normal'
-          }
-        });
-        $('#teeny').graphie({
-          padding_top: 0,
-          labels: {
-            size: 10
-          }
-        });
-      });
       try{Typekit.load();}catch(e){}
   %body
     #wrapper
       %hgroup
-        %h1 jQuery.graphie
-        %h2 a cute little graphing library
+        %h1<>
+          jQuery
+          %span<> .graphie
+        %h2 a cute little graphing plugin
       %p
-        ©
-        = Time.now.year
+        by
         %a(href="http://camerondaigle.com") Cameron Daigle
-      %p
-        Visualize the values in a definition list. For available options, check out the
-        %a(href="https://github.com/camerond/jquery-graphie/blob/master/jquery.graphie.js") source
-      %h3 it has defaults:
+      :markdown
+        To use, include [the plugin](https://github.com/camerond/jquery-graphie/blob/master/public/javascript/jquery.graphie.js) and call `$.graphie()` on a `<dl>` of numeric values. (Also requires [Raphael](http://raphaeljs.com/))
+
+        For available options, check out the
+        [source](https://github.com/camerond/jquery-graphie/blob/master/jquery.graphie.js).
+
+      %h3 it has nice-looking defaults:
       %dl#normal
         - 10.times do
           %dt Label
           %dd=rand(300)
-      %h3 it has options:
+      %h3 it has some options:
       %dl#options
         - 10.times do
           %dt Label
           %dd=rand(30)
       %h3 it looks good teeny:
       %dl#teeny
-        - 50.times do
+        - 20.times do
           %dt Label
           %dd=rand(30)

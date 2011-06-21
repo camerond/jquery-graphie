@@ -2,8 +2,9 @@
 
 body
   font-family: 'Helvetica Neue', helvetica, sans-serif
-  background: #1d1f21
-  color: #ff51d0
+  background: #1d1f21 url("/images/jq_bg.png")
+  color: #d2d8e3
+  text-shadow: 0 2px 1px #000
 
 #wrapper
   padding: 100px
@@ -11,22 +12,28 @@ body
 p
   font-weight: bold
   margin: 0 0 40px 0
+  code
+    font-weight: bold
+    font-size: 1.1em
+    background: #31363b
+    padding: 2px 4px
+    margin: 0 4px
+    text-shadow: 0 1px 1px #000
   a
     text-decoration: none
-    color: #ff51d0
-    border-bottom: 1px dotted #ff51d0
+    color: #d367b6
     &:hover
-      color: #3ad4e6
-      border-bottom: 1px dotted #3ad4e6
+      text-decoration: underline
 
 hgroup
   margin: 0 0 40px 0
   font-family: "chunk-1","chunk-2", 'Helvetica Neue', helvetica, sans-serif
   h1
     font-size: 80px
+    span
+      color: #d367b6
   h2
     font-size: 40px
-    color: #3ad4e6
   form
     label
       font-size: 14px
@@ -38,13 +45,14 @@ h3
 .graphie
   width: 400px
   height: 140px
-  background: #ddffff
+  background: #fff
   overflow: hidden
   margin: 0 0 40px 0
+  text-shadow: none
 #options.graphie
   height: 100px
   width: 600px
-  background: #1d1f21
+  background: none
 #teeny.graphie
   height: 20px
   width: 300px

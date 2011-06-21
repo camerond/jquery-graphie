@@ -4,6 +4,7 @@ gem 'haml'
 gem 'sass'
 gem 'hassle'
 gem 'sinatra'
+gem 'rdiscount'
 
 group :development do
   gem 'heroku'
