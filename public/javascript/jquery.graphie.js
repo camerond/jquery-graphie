@@ -32,6 +32,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
   $.fn.graphie = function(options) {
     var defaults = {
+      type: 'line',
       line: {
         bgcolor: '#5ad0ea',
         smoothing: 0,
@@ -90,20 +91,38 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   };
 
   function drawLine(graph, points) {
-    var line = graph.path('M0,0').attr({stroke: 'none', fill: opts.line.bgcolor});
-    var interval = opts.w / (points.length - 1);
-    var coords = 'M0,' + opts.h;
+    var line = graph.path('M0 0').attr({stroke: 'none', fill: opts.line.bgcolor});
+    var coords = 'M0 ' + opts.h;
+    var scale = getYScale(points);
     var x, y;
-    if(opts.line.autosmooth) {
-      opts.line.smoothing = interval / 2;
-    }
-    for(var i = 0; i < points.length; i++) {
-      x = interval * i;
-      y = (opts.h - (getYScale(points) * points[i]));
-      coords += ',S' + (x - opts.line.smoothing) + ',' + y + ' ' + x + ',' + y;
-    }
-    coords += ',L' + opts.w + ',' + opts.h;
-    line.attr({path: coords});
+    var types = {
+      'line': function() {
+        var interval = opts.w / (points.length - 1);
+        if(opts.line.autosmooth) {
+          opts.line.smoothing = interval / 2;
+        }
+        for(var i = 0, j = points.length; i < j; i++) {
+          x = interval * i;
+          y = (opts.h - (scale * points[i]));
+          coords += ' S' + (x - opts.line.smoothing) + ' ' + y + ' ' + x + ' ' + y;
+        }
+        coords += ' L' + opts.w + ' ' + opts.h;
+        line.attr({path: coords});
+      },
+      'sparkline': function() {
+        var interval = (opts.w - points.length - 1) / points.length;
+        interval = interval > 1 ? Math.floor(interval) : 1;
+        coords += ' L';
+        x = 0;
+        for(var i = 0, j = points.length; i < j; i++) {
+          y = Math.floor(opts.h - (scale * points[i]));
+          coords += x + ' ' + y + ' ' + (x + interval) + ' ' + y + ' ' + (x + interval) + ' ' + opts.h + ' ' + (x + interval + 1) + ' ' + opts.h + ' ';
+          x = x + interval + 1;
+        }
+        line.attr({path: coords});
+      }
+    };
+    return types[opts.type]();
   }
 
   function attachLabels(graph, labels) {

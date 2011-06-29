@@ -19,4 +19,11 @@ $(function() {
 
   $('#teeny').graphie();
 
+  $('#sparklines').graphie({
+    type: 'sparkline',
+    line: {
+      bgcolor: "#fff"
+    }
+  });
+
 });
