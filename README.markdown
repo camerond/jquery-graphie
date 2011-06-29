@@ -12,21 +12,21 @@ Visit [http://jquery-graphie.heroku.com]() for examples.
 
 ## Options (defaults shown)
 
-  $item.graphie({
-    type: 'line',             // can be either 'line' or 'column'
-    line: {
-      bgcolor: '#5ad0ea',     // Background color of line/columns. Set to false for no background.
-      smoothing: 'auto',      // You can set an arbitrary line smoothing value here (number without 'px'). Change to 0 for straight lines.
-      column_width: 'auto'    // You can set an arbitrary width here (number without 'px').
-      stroke: '#5ad0ea'       // Stroke color
-      stroke_width: 0         // Stroke width. Looks best with no bgcolor.
-    },
-    labels: {
-      x: 5,                   // Label distance from sides
-      y: 5,                   // Label distance from bottom
-      color: '#000',          // These
-      family: 'Helvetica',    // are
-      weight: 'bold',         // obvious,
-      size: 12                // right?
-    }
-  });
+    $item.graphie({
+      type: 'line',             // can be either 'line' or 'column'
+      line: {
+        bgcolor: '#5ad0ea',     // Background color of line/columns. Set to false for no background.
+        smoothing: 'auto',      // You can set an arbitrary line smoothing value here (number without 'px'). Change to 0 for straight lines.
+        column_width: 'auto'    // You can set an arbitrary width here (number without 'px').
+        stroke: '#5ad0ea'       // Stroke color
+        stroke_width: 0         // Stroke width. Looks best with no bgcolor.
+      },
+      labels: {
+        x: 5,                   // Label distance from sides
+        y: 5,                   // Label distance from bottom
+        color: '#000',          // These
+        family: 'Helvetica',    // are
+        weight: 'bold',         // obvious,
+        size: 12                // right?
+      }
+    });
