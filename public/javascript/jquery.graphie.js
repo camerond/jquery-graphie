@@ -1,7 +1,7 @@
 /*
 
 jQuery Graphie Plugin
-version 0.1
+version 0.2
 
 Copyright (c) 2011 Cameron Daigle, http://camerondaigle.com
 
@@ -91,15 +91,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   };
 
   function drawLine(graph, points) {
-    var line = graph.path('M0 0').attr({stroke: 'none', fill: opts.line.bgcolor});
-    var coords = 'M0 ' + opts.h;
-    var scale = getYScale(points);
-    var x, y;
+    var coords = 'M0 ' + opts.h,
+        line = graph.path(coords).attr({stroke: 'none', fill: opts.line.bgcolor}),
+        scale = getYScale(points),
+        x, y;
     var types = {
       'line': function() {
         var interval = opts.w / (points.length - 1);
         if(opts.line.autosmooth) {
-          opts.line.smoothing = interval / 2;
+          opts.line.smoothing = opts.line.autosmooth ? interval / 2 : 0;
         }
         for(var i = 0, j = points.length; i < j; i++) {
           x = interval * i;
@@ -107,7 +107,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           coords += ' S' + (x - opts.line.smoothing) + ' ' + y + ' ' + x + ' ' + y;
         }
         coords += ' L' + opts.w + ' ' + opts.h;
-        line.attr({path: coords});
+        return coords;
       },
       'sparkline': function() {
         var interval = (opts.w - points.length - 1) / points.length;
@@ -119,10 +119,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           coords += x + ' ' + y + ' ' + (x + interval) + ' ' + y + ' ' + (x + interval) + ' ' + opts.h + ' ' + (x + interval + 1) + ' ' + opts.h + ' ';
           x = x + interval + 1;
         }
-        line.attr({path: coords});
+        return coords;
       }
     };
-    return types[opts.type]();
+    return line.attr({path: types[opts.type]()});
   }
 
   function attachLabels(graph, labels) {
