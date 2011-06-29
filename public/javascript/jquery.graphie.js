@@ -1,7 +1,7 @@
 /*
 
 jQuery Graphie Plugin
-version 0.2
+version 0.2.1
 
 Copyright (c) 2011 Cameron Daigle, http://camerondaigle.com
 
@@ -35,8 +35,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       type: 'line',
       line: {
         bgcolor: '#5ad0ea',
-        smoothing: 0,
-        autosmooth: true
+        smoothing: 'auto',
+        sparkline_width: 'auto'
       },
       labels: {
         x: 5,
@@ -94,11 +94,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     var coords = 'M0 ' + opts.h,
         line = graph.path(coords).attr({stroke: 'none', fill: opts.line.bgcolor}),
         scale = getYScale(points),
-        x, y;
+        x, y, interval;
     var types = {
       'line': function() {
-        var interval = opts.w / (points.length - 1);
-        if(opts.line.autosmooth) {
+        interval = opts.w / (points.length - 1);
+        if (opts.line.smoothing === 'auto') {
           opts.line.smoothing = opts.line.autosmooth ? interval / 2 : 0;
         }
         for(var i = 0, j = points.length; i < j; i++) {
@@ -110,8 +110,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         return coords;
       },
       'sparkline': function() {
-        var interval = (opts.w - points.length - 1) / points.length;
-        interval = interval > 1 ? Math.floor(interval) : 1;
+        if (opts.line.sparkline_width === 'auto') {
+          interval = (opts.w - points.length - 1) / points.length;
+        } else {
+          interval = +opts.line.sparkline_width;
+        }
         coords += ' L';
         x = 0;
         for(var i = 0, j = points.length; i < j; i++) {
