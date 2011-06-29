@@ -1,7 +1,7 @@
 /*
 
 jQuery Graphie Plugin
-version 0.2.1
+version 0.2.2
 
 Copyright (c) 2011 Cameron Daigle, http://camerondaigle.com
 
@@ -36,7 +36,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       line: {
         bgcolor: '#5ad0ea',
         smoothing: 'auto',
-        sparkline_width: 'auto'
+        column_width: 'auto'
       },
       labels: {
         x: 5,
@@ -109,11 +109,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         coords += ' L' + opts.w + ' ' + opts.h;
         return coords;
       },
-      'sparkline': function() {
-        if (opts.line.sparkline_width === 'auto') {
+      'column': function() {
+        if (opts.line.column_width === 'auto') {
           interval = (opts.w - points.length - 1) / points.length;
         } else {
-          interval = +opts.line.sparkline_width;
+          interval = +opts.line.column_width;
         }
         coords += ' L';
         x = 0;

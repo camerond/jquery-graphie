@@ -13,11 +13,11 @@ Visit [http://jquery-graphie.heroku.com]() for examples.
 ## Options (defaults shown)
 
   $item.graphie({
-    type: 'line',             // can be either 'line' or 'sparkline'
+    type: 'line',             // can be either 'line' or 'column'
     line: {
-      bgcolor: '#5ad0ea',     // Background color of line/sparklines. Background color for the graph area is set in CSS.
+      bgcolor: '#5ad0ea',     // Background color of line/columns. Background color for the graph area is set in CSS.
       smoothing: 'auto',      // You can set an arbitrary line smoothing value here (number without 'px'). Change to 0 for straight lines.
-      sparkline_width: 'auto' // You can set an arbitrary width here (number without 'px'). 
+      column_width: 'auto'    // You can set an arbitrary width here (number without 'px').
     },
     labels: {
       x: 5,                   // Label distance from sides

@@ -19,8 +19,8 @@ $(function() {
 
   $('#teeny').graphie();
 
-  $('#sparklines').graphie({
-    type: 'sparkline',
+  $('#columns').graphie({
+    type: 'column',
     line: {
       bgcolor: "#fff"
     }
