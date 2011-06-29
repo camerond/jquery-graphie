@@ -1,7 +1,7 @@
 /*
 
 jQuery Graphie Plugin
-version 0.2.2
+version 0.2.3
 
 Copyright (c) 2011 Cameron Daigle, http://camerondaigle.com
 
@@ -36,6 +36,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       line: {
         bgcolor: '#5ad0ea',
         smoothing: 'auto',
+        stroke: '#5ad0ea',
+        stroke_width: 0,
         column_width: 'auto'
       },
       labels: {
@@ -92,7 +94,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
   function drawLine(graph, points) {
     var coords = 'M0 ' + opts.h,
-        line = graph.path(coords).attr({stroke: 'none', fill: opts.line.bgcolor}),
+        line = graph.path(coords).attr({stroke: opts.line.stroke, "stroke-width": opts.line.stroke_width, fill: opts.line.bgcolor}),
         scale = getYScale(points),
         x, y, interval;
     var types = {
@@ -101,12 +103,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         if (opts.line.smoothing === 'auto') {
           opts.line.smoothing = opts.line.autosmooth ? interval / 2 : 0;
         }
+        if (!opts.line.bgcolor) {
+          coords = 'M0 ' + (opts.h - (scale * points[0]));
+        }
         for(var i = 0, j = points.length; i < j; i++) {
           x = interval * i;
           y = (opts.h - (scale * points[i]));
           coords += ' S' + (x - opts.line.smoothing) + ' ' + y + ' ' + x + ' ' + y;
         }
-        coords += ' L' + opts.w + ' ' + opts.h;
+        if (opts.line.bgcolor) {
+          coords += ' L' + opts.w + ' ' + opts.h;
+        }
         return coords;
       },
       'column': function() {

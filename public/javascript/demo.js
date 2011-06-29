@@ -26,4 +26,12 @@ $(function() {
     }
   });
 
+  $("#line").graphie({
+    line: {
+      bgcolor: false,
+      stroke_width: 1,
+      stroke: '#000'
+    }
+  });
+
 });
