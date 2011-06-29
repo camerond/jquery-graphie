@@ -17,10 +17,6 @@ $(function() {
     }
   });
 
-  $('#teeny').graphie({
-    labels: {
-      size: 10
-    }
-  });
+  $('#teeny').graphie();
 
 });

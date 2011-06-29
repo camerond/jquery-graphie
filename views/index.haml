@@ -21,7 +21,7 @@
         by
         %a(href="http://camerondaigle.com") Cameron Daigle
       :markdown
-        To use, include [the plugin](https://github.com/camerond/jquery-graphie/blob/master/public/javascript/jquery.graphie.js) and call `$.graphie()` on a `<dl>` of numeric values. (Also requires [Raphael](http://raphaeljs.com/))
+        To use, include [the plugin](https://github.com/camerond/jquery-graphie/blob/master/public/javascript/jquery.graphie.js) and call `$.graphie()` on a `<dl>`, `<ul>` or `<ol>` of numeric values. (Also requires [Raphael](http://raphaeljs.com/))
 
         For available options, check out the
         [source](https://github.com/camerond/jquery-graphie/blob/master/public/javascript/jquery.graphie.js).
@@ -37,10 +37,9 @@
           %dt Label
           %dd=rand(30)
       %h3 it looks good teeny:
-      %dl#teeny
+      %ul#teeny
         - 20.times do
-          %dt Label
-          %dd=rand(30)
+          %li=rand(30)
 
 
     - if production?

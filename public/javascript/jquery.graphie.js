@@ -77,8 +77,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           data.points.push(parseInt($(this).text(), 10));
         });
         return data;
+      },
+      'ul': function() {
+        $el.find('li').each(function() {
+          data.points.push(parseInt($(this).text(), 10));
+        });
+        return data;
       }
     };
+    parsers.ol = parsers.ul;
     return parsers[$el[0].tagName.toLowerCase()]();
   };
 
