@@ -100,9 +100,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     var types = {
       'line': function() {
         interval = opts.w / (points.length - 1);
-        if (opts.line.smoothing === 'auto') {
-          opts.line.smoothing = opts.line.autosmooth ? interval / 2 : 0;
-        }
+        opts.line.smoothing === 'auto' ? opts.line.smoothing = interval / 2 : false;
         if (!opts.line.bgcolor) {
           coords = 'M0 ' + (opts.h - (scale * points[0]));
         }

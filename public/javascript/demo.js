@@ -5,8 +5,7 @@ $(function() {
   $('#options').graphie({
     line: {
       bgcolor: "#31363b",
-      smoothing: 5,
-      autosmooth: false
+      smoothing: 10,
     },
     labels: {
       color: '#ffd800',
@@ -30,7 +29,8 @@ $(function() {
     line: {
       bgcolor: false,
       stroke_width: 1,
-      stroke: '#000'
+      stroke: '#000',
+      smoothing: 0
     }
   });
 
