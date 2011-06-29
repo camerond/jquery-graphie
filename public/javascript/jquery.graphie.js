@@ -115,6 +115,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         } else {
           interval = +opts.line.column_width;
         }
+        interval = interval > 1 ? Math.floor(interval) : 1;
         coords += ' L';
         x = 0;
         for(var i = 0, j = points.length; i < j; i++) {
