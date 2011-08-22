@@ -11,6 +11,10 @@ get '/stylesheets/*.css' do |f|
   sass ('/stylesheets/' + f).to_sym
 end
 
+get '/examples' do
+  haml :examples
+end
+
 get '/' do
   haml :index
 end

@@ -6,45 +6,39 @@
     %script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js")
     %script(type="text/javascript" src="/javascript/lib/raphael.js")
     %script(type="text/javascript" src="/javascript/jquery.graphie.js")
-    %script(type="text/javascript" src="/javascript/demo.js")
+    %script(type="text/javascript" src="/javascript/examples.js")
     %script(type="text/javascript" src="http://use.typekit.com/aqp8xdq.js")
     :javascript
       try{Typekit.load();}catch(e){}
-  %body#demos
+  %body#examples
     #wrapper
       %hgroup
         %h1<>
           jQuery
           %span<> .graphie
-        %h2 a cute little graphing plugin
-      %p
-        by
-        %a(href="http://camerondaigle.com") Cameron Daigle
+        %h2 examples
+
       :markdown
-        To use, include [the plugin](https://github.com/camerond/jquery-graphie/blob/master/public/javascript/jquery.graphie.js) and call `$.graphie()` on a `<dl>`, `<ul>` or `<ol>` of numeric values. (Also requires [Raphael](http://raphaeljs.com/))
+        ### CSS-controlled attributes
 
-        For available options, check out the
-        [source](https://github.com/camerond/jquery-graphie/blob/master/public/javascript/jquery.graphie.js) or the [readme](https://github.com/camerond/jquery-graphie).
+        Graphie adds a class of `graphie` on its containing element. Use this to style the background color & dimensions of the graph area.
 
-      %h3 it has nice-looking defaults:
-      %dl#normal
-        - 10.times do
-          %dt Label
-          %dd=rand(300)
-      %h3 it has some options:
-      %dl#options
-        - 10.times do
-          %dt Label
-          %dd=rand(30)
-      %h3 it looks good teeny:
-      %ul#teeny
+      %h3 Line: Smoothing
+      %ul#smoothing
         - 20.times do
           %li=rand(30)
-      %ul#columns
-        - 98.times do
+      %h3 Line: Styles
+      %ul#line_styles
+        -20.times do
           %li=rand(30)
-      %ul#line
-        - 150.times do
+      %h3 X Labels
+      %dl#labels_x
+        - (1..30).each do |n|
+          %dt== Aug #{n}
+          %dd=rand(30)
+      %h3 Column
+      %ul#column
+        -20.times do
           %li=rand(30)
 
 
