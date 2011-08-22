@@ -40,7 +40,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         stroke_width: 0,
         column_width: 'auto'
       },
-      labels: {
+      labels_x: {
         x: 5,
         y: 5,
         color: '#000',
@@ -54,7 +54,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       var graph = initGraph($(this));
       var data = parseData($(this));
       drawLine(graph, data.points);
-      attachLabels(graph, data.labels);
+      attachXLabels(graph, data.labels_x);
     });
 
   };
@@ -70,12 +70,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   function parseData($el) {
     var data = {
       points: [],
-      labels: []
+      labels_x: []
     };
     var parsers = {
       'dl': function() {
-        data.labels.push($el.find('dt:first').text());
-        data.labels.push($el.find('dt:last').text());
+        data.labels_x.push($el.find('dt:first').text());
+        data.labels_x.push($el.find('dt:last').text());
         $el.find('dd').each(function() {
           data.points.push(parseInt($(this).text(), 10));
         });
@@ -134,14 +134,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     return line.attr({path: types[opts.type]()});
   }
 
-  function attachLabels(graph, labels) {
+  function attachXLabels(graph, labels) {
+    var lx = opts.labels_x;
     var text_attrs = {
-      font: opts.labels.weight + ' ' + opts.labels.size + 'px ' + opts.labels.family,
-      fill: opts.labels.color,
+      font: lx.weight + ' ' + lx.size + 'px ' + lx.family,
+      fill: lx.color,
       'text-anchor': 'start'
     };
-    graph.text(opts.labels.x, opts.h - opts.labels.y - opts.labels.size / 2, labels[0]).attr(text_attrs);
-    var right_caption = graph.text(opts.w - opts.labels.x, opts.h - opts.labels.y - opts.labels.size / 2, labels.pop()).attr(text_attrs);
+    graph.text(lx.x, opts.h - lx.y - lx.size / 2, labels[0]).attr(text_attrs);
+    var right_caption = graph.text(opts.w - lx.x, opts.h - lx.y - lx.size / 2, labels.pop()).attr(text_attrs);
     right_caption.attr({ 'text-anchor': 'end' });
   }
 

@@ -1,25 +1,25 @@
 $(function() {
 
-  $('#normal').graphie();
+  $("#normal").graphie();
 
-  $('#options').graphie({
+  $("#options").graphie({
     line: {
       bgcolor: "#31363b",
-      smoothing: 10,
+      smoothing: 10
     },
-    labels: {
-      color: '#ffd800',
+    labels_x: {
+      color: "#ffd800",
       x: 20,
       y: 20,
       size: 20,
-      weight: 'normal'
+      weight: "normal"
     }
   });
 
-  $('#teeny').graphie();
+  $("#teeny").graphie();
 
-  $('#columns').graphie({
-    type: 'column',
+  $("#columns").graphie({
+    type: "column",
     line: {
       bgcolor: "#fff"
     }
@@ -29,7 +29,7 @@ $(function() {
     line: {
       bgcolor: false,
       stroke_width: 1,
-      stroke: '#000',
+      stroke: "#000",
       smoothing: 0
     }
   });
