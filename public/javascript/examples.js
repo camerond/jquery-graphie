@@ -13,16 +13,31 @@ $(function() {
     }
   });
   $("#labels_x").graphie({
-    line: {
-      bgcolor: "#444"
-    },
     labels_x: {
-      color: "#fff",
       family: "Georgia, serif",
       weight: "normal",
+      color: "#004165",
       size: 20,
       x: 5,
       y: 20
+    }
+  });
+  $("#labels_x_bottom").graphie({
+    padding: {
+      bottom: 20
+    },
+    labels_x: {
+      x: 5,
+      y: -14
+    }
+  });
+  $("#labels_x_top").graphie({
+    padding: {
+      top: 20
+    },
+    labels_x: {
+      x: 5,
+      y: 35
     }
   });
   $("#column").graphie({

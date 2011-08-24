@@ -1,7 +1,7 @@
 /*
 
 jQuery Graphie Plugin
-version 0.2.3
+version 0.2.4a
 
 Copyright (c) 2011 Cameron Daigle, http://camerondaigle.com
 
@@ -33,6 +33,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   $.fn.graphie = function(options) {
     var defaults = {
       type: 'line',
+      padding: {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+      },
       line: {
         bgcolor: '#5ad0ea',
         smoothing: 'auto',
@@ -61,10 +67,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
   function initGraph($el) {
     $el.addClass('graphie');
-    opts.w = $el.width();
-    opts.h = $el.height();
+    opts.graph = {
+      width: $el.width(),
+      height: $el.height() - opts.padding.top - opts.padding.bottom
+    };
     $el.children().hide();
-    return Raphael($el.attr('id'), opts.w, opts.h);
+    return Raphael($el.attr('id'), $el.width(), $el.height());
   }
 
   function parseData($el) {
@@ -93,30 +101,32 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   };
 
   function drawLine(graph, points) {
-    var coords = 'M0 ' + opts.h,
+    var origin_y = opts.graph.height + opts.padding.top,
+        coords = 'M0 ' + origin_y,
         line = graph.path(coords).attr({stroke: opts.line.stroke, "stroke-width": opts.line.stroke_width, fill: opts.line.bgcolor}),
         scale = getYScale(points),
+        w = opts.graph.width,
         x, y, interval;
     var types = {
       'line': function() {
-        interval = opts.w / (points.length - 1);
+        interval = w / (points.length - 1);
         opts.line.smoothing === 'auto' ? opts.line.smoothing = interval / 2 : false;
         if (!opts.line.bgcolor) {
-          coords = 'M0 ' + (opts.h - (scale * points[0]));
+          coords = 'M0 ' + (origin_y - (scale * points[0]));
         }
         for(var i = 0, j = points.length; i < j; i++) {
           x = interval * i;
-          y = (opts.h - (scale * points[i]));
+          y = (origin_y - (scale * points[i]));
           coords += ' S' + (x - opts.line.smoothing) + ' ' + y + ' ' + x + ' ' + y;
         }
         if (opts.line.bgcolor) {
-          coords += ' L' + opts.w + ' ' + opts.h;
+          coords += ' L' + w + ' ' + origin_y;
         }
         return coords;
       },
       'column': function() {
         if (opts.line.column_width === 'auto') {
-          interval = (opts.w - points.length - 1) / points.length;
+          interval = (w - points.length - 1) / points.length;
         } else {
           interval = +opts.line.column_width;
         }
@@ -124,8 +134,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         coords += ' L';
         x = 0;
         for(var i = 0, j = points.length; i < j; i++) {
-          y = Math.floor(opts.h - (scale * points[i]));
-          coords += x + ' ' + y + ' ' + (x + interval) + ' ' + y + ' ' + (x + interval) + ' ' + opts.h + ' ' + (x + interval + 1) + ' ' + opts.h + ' ';
+          y = Math.floor(origin_y - (scale * points[i]));
+          coords += x + ' ' + y + ' ' + (x + interval) + ' ' + y + ' ' + (x + interval) + ' ' + origin_y + ' ' + (x + interval + 1) + ' ' + origin_y + ' ';
           x = x + interval + 1;
         }
         return coords;
@@ -135,19 +145,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   }
 
   function attachXLabels(graph, labels) {
-    var lx = opts.labels_x;
-    var text_attrs = {
-      font: lx.weight + ' ' + lx.size + 'px ' + lx.family,
-      fill: lx.color,
-      'text-anchor': 'start'
-    };
-    graph.text(lx.x, opts.h - lx.y - lx.size / 2, labels[0]).attr(text_attrs);
-    var right_caption = graph.text(opts.w - lx.x, opts.h - lx.y - lx.size / 2, labels.pop()).attr(text_attrs);
+    var lx = opts.labels_x,
+        y = opts.graph.height + opts.padding.top - lx.y - lx.size / 2,
+        text_attrs = {
+          font: lx.weight + ' ' + lx.size + 'px ' + lx.family,
+          fill: lx.color,
+          'text-anchor': 'start'
+        };
+    graph.text(lx.x, y, labels[0]).attr(text_attrs);
+    var right_caption = graph.text(opts.graph.width - lx.x, y, labels.pop()).attr(text_attrs);
     right_caption.attr({ 'text-anchor': 'end' });
   }
 
   function getYScale(points) {
-    return opts.h / Math.max.apply(Math, points);
+    return opts.graph.height / Math.max.apply(Math, points);
   }
 
 })(jQuery);

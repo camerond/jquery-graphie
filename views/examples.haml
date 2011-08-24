@@ -36,10 +36,19 @@
         - (1..30).each do |n|
           %dt== Aug #{n}
           %dd=rand(30)
+      %dl#labels_x_bottom
+        - (1..30).each do |n|
+          %dt== Aug #{n}
+          %dd=rand(30)
+      %dl#labels_x_top
+        - (1..30).each do |n|
+          %dt== Aug #{n}
+          %dd=rand(30)
       %h3 Column
-      %ul#column
-        -20.times do
-          %li=rand(30)
+      %dl#column
+        - (1..30).each do |n|
+          %dt== Aug #{n}
+          %dd=rand(30)
 
 
     - if production?
