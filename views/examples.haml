@@ -49,6 +49,10 @@
         - (1..30).each do |n|
           %dt== Aug #{n}
           %dd=rand(30)
+      %dl#column_all-labels
+        - (1..10).each do |n|
+          %dt== Aug #{n}
+          %dd=rand(30)
 
 
     - if production?

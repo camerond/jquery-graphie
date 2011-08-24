@@ -52,7 +52,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         color: '#000',
         family: 'Helvetica, arial, sans-serif',
         weight: 'bold',
-        size: 12
+        size: 12,
+        align: "left",
+        display: "endpoints"
       }
     };
     return this.each(function() {
@@ -82,8 +84,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     };
     var parsers = {
       'dl': function() {
-        data.labels_x.push($el.find('dt:first').text());
-        data.labels_x.push($el.find('dt:last').text());
+        $el.find("dt").each(function() {
+          data.labels_x.push($(this).text());
+        });
         $el.find('dd').each(function() {
           data.points.push(parseInt($(this).text(), 10));
         });
@@ -115,7 +118,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           coords = 'M0 ' + (origin_y - (scale * points[0]));
         }
         for(var i = 0, j = points.length; i < j; i++) {
-          x = interval * i;
+          x = i * interval;
           y = (origin_y - (scale * points[i]));
           coords += ' S' + (x - opts.path.smoothing) + ' ' + y + ' ' + x + ' ' + y;
         }
@@ -141,7 +144,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         return coords;
       }
     };
-    return path.attr({path: types[opts.type]()});
+    coords = path.attr({path: types[opts.type]()});
+    opts.graph.interval = interval;
+    return coords;
   }
 
   function attachXLabels(graph, labels) {
@@ -149,12 +154,30 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         y = opts.graph.height + opts.padding.top - lx.y - lx.size / 2,
         text_attrs = {
           font: lx.weight + ' ' + lx.size + 'px ' + lx.family,
-          fill: lx.color,
-          'text-anchor': 'start'
+          fill: lx.color
         };
-    graph.text(lx.x, y, labels[0]).attr(text_attrs);
-    var right_caption = graph.text(opts.graph.width - lx.x, y, labels.pop()).attr(text_attrs);
-    right_caption.attr({ 'text-anchor': 'end' });
+    if (opts.labels_x.display === "endpoints") {
+      text_attrs["text-anchor"] = "start";
+      graph.text(lx.x, y, labels[0]).attr(text_attrs);
+      graph.text(opts.graph.width - lx.x, y, labels[labels.length-1]).attr(text_attrs).attr({ 'text-anchor': 'end' });
+    } else if (opts.labels_x.display === "all") {
+      switch (opts.labels_x.align) {
+        case "left":
+          text_attrs["text-anchor"] = "start";
+          break;
+        case "right":
+          text_attrs["text-anchor"] = "end";
+          lx.x += opts.graph.interval;
+          break;
+        case "center":
+          text_attrs["text-anchor"] = "middle";
+          lx.x += opts.graph.interval / 2;
+          break;
+      };
+      for (var i=0, max=labels.length; i<=max; i++) {
+        graph.text(lx.x + i * opts.graph.interval + i, y, labels[i]).attr(text_attrs);
+      }
+    }
   }
 
   function getYScale(points) {

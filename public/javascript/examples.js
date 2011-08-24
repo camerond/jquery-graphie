@@ -43,4 +43,16 @@ $(function() {
   $("#column").graphie({
     type: 'column'
   });
+  $("#column_all-labels").graphie({
+    type: 'column',
+    padding: {
+      bottom: 20
+    },
+    labels_x: {
+      x: 0,
+      y: -15,
+      display: "all",
+      align: "center"
+    }
+  });
 });
