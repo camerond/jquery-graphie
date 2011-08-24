@@ -39,7 +39,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         right: 0,
         bottom: 0
       },
-      line: {
+      path: {
         bgcolor: '#5ad0ea',
         smoothing: 'auto',
         stroke: '#5ad0ea',
@@ -59,7 +59,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       opts = $.extend(true, defaults, options);
       var graph = initGraph($(this));
       var data = parseData($(this));
-      drawLine(graph, data.points);
+      drawPath(graph, data.points);
       attachXLabels(graph, data.labels_x);
     });
 
@@ -100,35 +100,35 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     return parsers[$el[0].tagName.toLowerCase()]();
   };
 
-  function drawLine(graph, points) {
+  function drawPath(graph, points) {
     var origin_y = opts.graph.height + opts.padding.top,
         coords = 'M0 ' + origin_y,
-        line = graph.path(coords).attr({stroke: opts.line.stroke, "stroke-width": opts.line.stroke_width, fill: opts.line.bgcolor}),
+        path = graph.path(coords).attr({stroke: opts.path.stroke, "stroke-width": opts.path.stroke_width, fill: opts.path.bgcolor}),
         scale = getYScale(points),
         w = opts.graph.width,
         x, y, interval;
     var types = {
       'line': function() {
         interval = w / (points.length - 1);
-        opts.line.smoothing === 'auto' ? opts.line.smoothing = interval / 2 : false;
-        if (!opts.line.bgcolor) {
+        opts.path.smoothing === 'auto' ? opts.path.smoothing = interval / 2 : false;
+        if (!opts.path.bgcolor) {
           coords = 'M0 ' + (origin_y - (scale * points[0]));
         }
         for(var i = 0, j = points.length; i < j; i++) {
           x = interval * i;
           y = (origin_y - (scale * points[i]));
-          coords += ' S' + (x - opts.line.smoothing) + ' ' + y + ' ' + x + ' ' + y;
+          coords += ' S' + (x - opts.path.smoothing) + ' ' + y + ' ' + x + ' ' + y;
         }
-        if (opts.line.bgcolor) {
+        if (opts.path.bgcolor) {
           coords += ' L' + w + ' ' + origin_y;
         }
         return coords;
       },
       'column': function() {
-        if (opts.line.column_width === 'auto') {
+        if (opts.path.column_width === 'auto') {
           interval = (w - points.length - 1) / points.length;
         } else {
-          interval = +opts.line.column_width;
+          interval = +opts.path.column_width;
         }
         interval = interval > 1 ? Math.floor(interval) : 1;
         coords += ' L';
@@ -141,7 +141,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         return coords;
       }
     };
-    return line.attr({path: types[opts.type]()});
+    return path.attr({path: types[opts.type]()});
   }
 
   function attachXLabels(graph, labels) {

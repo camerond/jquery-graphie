@@ -1,12 +1,12 @@
 $(function() {
 
   $("#smoothing").graphie({
-    line: {
+    path: {
       smoothing: 10
     }
   });
   $("#line_styles").graphie({
-    line: {
+    path: {
       bgcolor: "#ff2222",
       stroke: "#ff9999",
       stroke_width: "3"

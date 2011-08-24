@@ -3,7 +3,7 @@ $(function() {
   $("#normal").graphie();
 
   $("#options").graphie({
-    line: {
+    path: {
       bgcolor: "#31363b",
       smoothing: 10
     },
@@ -20,13 +20,13 @@ $(function() {
 
   $("#columns").graphie({
     type: "column",
-    line: {
+    path: {
       bgcolor: "#fff"
     }
   });
 
   $("#line").graphie({
-    line: {
+    path: {
       bgcolor: false,
       stroke_width: 1,
       stroke: "#000",
