@@ -46,13 +46,18 @@ $(function() {
   $("#column_all-labels").graphie({
     type: 'column',
     padding: {
-      bottom: 20
+      bottom: 20,
+      top: 15
     },
     labels_x: {
       x: 0,
       y: -15,
       display: "all",
       align: "center"
+    },
+    labels_y: {
+      display: "relative",
+      size: 10
     }
   });
 });

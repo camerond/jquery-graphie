@@ -55,14 +55,25 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         size: 12,
         align: "left",
         display: "endpoints"
+      },
+      labels_y: {
+        display: false,
+        x: 0,
+        y: 0,
+        color: '#000',
+        family: 'Helvetica, arial, sans-serif',
+        weight: 'bold',
+        size: 12,
+        align: "center"
       }
     };
     return this.each(function() {
       opts = $.extend(true, defaults, options);
       var graph = initGraph($(this));
       var data = parseData($(this));
-      drawPath(graph, data.points);
+      drawPath(graph, data);
       attachXLabels(graph, data.labels_x);
+      attachYLabels(graph, data);
     });
 
   };
@@ -79,7 +90,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
   function parseData($el) {
     var data = {
-      points: [],
+      labels_y: [],
       labels_x: []
     };
     var parsers = {
@@ -88,13 +99,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           data.labels_x.push($(this).text());
         });
         $el.find('dd').each(function() {
-          data.points.push(parseInt($(this).text(), 10));
+          data.labels_y.push(parseInt($(this).text(), 10));
         });
         return data;
       },
       'ul': function() {
         $el.find('li').each(function() {
-          data.points.push(parseInt($(this).text(), 10));
+          data.labels_y.push(parseInt($(this).text(), 10));
         });
         return data;
       }
@@ -103,13 +114,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     return parsers[$el[0].tagName.toLowerCase()]();
   };
 
-  function drawPath(graph, points) {
+  function drawPath(graph, data) {
     var origin_y = opts.graph.height + opts.padding.top,
         coords = 'M0 ' + origin_y,
         path = graph.path(coords).attr({stroke: opts.path.stroke, "stroke-width": opts.path.stroke_width, fill: opts.path.bgcolor}),
-        scale = getYScale(points),
+        scale = getYScale(data.labels_y),
         w = opts.graph.width,
+        points = data.labels_y,
         x, y, interval;
+    data.points = [];
     var types = {
       'line': function() {
         interval = w / (points.length - 1);
@@ -120,6 +133,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         for(var i = 0, j = points.length; i < j; i++) {
           x = i * interval;
           y = (origin_y - (scale * points[i]));
+          data.points.push(y);
           coords += ' S' + (x - opts.path.smoothing) + ' ' + y + ' ' + x + ' ' + y;
         }
         if (opts.path.bgcolor) {
@@ -138,15 +152,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         x = 0;
         for(var i = 0, j = points.length; i < j; i++) {
           y = Math.floor(origin_y - (scale * points[i]));
+          data.points.push(y);
           coords += x + ' ' + y + ' ' + (x + interval) + ' ' + y + ' ' + (x + interval) + ' ' + origin_y + ' ' + (x + interval + 1) + ' ' + origin_y + ' ';
           x = x + interval + 1;
         }
         return coords;
       }
     };
-    coords = path.attr({path: types[opts.type]()});
+    path.attr({path: types[opts.type]()});
     opts.graph.interval = interval;
-    return coords;
   }
 
   function attachXLabels(graph, labels) {
@@ -177,6 +191,43 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       for (var i=0, max=labels.length; i<=max; i++) {
         graph.text(lx.x + i * opts.graph.interval + i, y, labels[i]).attr(text_attrs);
       }
+    }
+  }
+
+  function attachYLabels(graph, data) {
+    var ly = opts.labels_y,
+        text_attrs = {
+          font: ly.weight + ' ' + ly.size + 'px ' + ly.family,
+          fill: ly.color
+        },
+        values = data.points,
+        i, max;
+    switch (opts.labels_y.align) {
+      case "left":
+        text_attrs["text-anchor"] = "start";
+        break;
+      case "right":
+        text_attrs["text-anchor"] = "end";
+        ly.x += opts.graph.interval;
+        break;
+      case "center":
+        text_attrs["text-anchor"] = "middle";
+        ly.x += opts.graph.interval / 2;
+        break;
+    };
+    switch (opts.labels_y.display) {
+      case false:
+        return;
+      case "relative":
+        for (i=0, max=data.labels_x.length; i<=max; i++) {
+          graph.text(ly.x + i * opts.graph.interval + i, values[i] - ly.y - ly.size, data.labels_y[i]).attr(text_attrs);
+        }
+        break;
+      case "absolute":
+        for (i=0, max=labels.length; i<=max; i++) {
+          graph.text(ly.x + i * opts.graph.interval + i, ly.y, data.labels_y[i]).attr(text_attrs);
+        }
+        break;
     }
   }
 
